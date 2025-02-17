@@ -13,9 +13,8 @@ pluginManagement {
             isAllowInsecureProtocol = true
             url = uri("http://192.168.1.250:8000/repository/libs-getcard/")
             credentials {
-                // Defina as credenciais a serem usadas na publicação
-                username = "admin"
-                password = "web123"
+                username = "getcard-public"
+                password = "!V4V4xEDUl0GC\$HK*nVMtvi*Q93mjzQKZn*6U%g\$"
             }
         }
     }
@@ -29,9 +28,8 @@ dependencyResolutionManagement {
             isAllowInsecureProtocol = true
             url = uri("http://192.168.1.250:8000/repository/libs-getcard/")
             credentials {
-                // Defina as credenciais a serem usadas na publicação
-                username = "admin"
-                password = "web123"
+                username = "getcard-public"
+                password = "!V4V4xEDUl0GC\$HK*nVMtvi*Q93mjzQKZn*6U%g\$"
             }
         }
     }
