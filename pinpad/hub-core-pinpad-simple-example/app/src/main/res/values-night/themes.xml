@@ -1,0 +1,6 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Hub_payment" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
