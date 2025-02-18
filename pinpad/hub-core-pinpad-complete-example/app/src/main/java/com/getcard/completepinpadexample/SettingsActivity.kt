@@ -10,7 +10,7 @@ import com.getcard.completepinpadexample.databinding.ActivitySettingsBinding
 import com.getcard.corepinpad.DeviceType
 import kotlinx.coroutines.launch
 
-class ChooseDeviceActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var database: HubDatabase
@@ -46,11 +46,11 @@ class ChooseDeviceActivity : AppCompatActivity() {
         binding.nextButton.setOnClickListener {
             val intent = when (choosedDevice) {
                 DeviceType.SITEF -> Intent(
-                    this@ChooseDeviceActivity,
+                    this@SettingsActivity,
                     SitefSettingsActivity::class.java
                 )
 
-                else -> Intent(this@ChooseDeviceActivity, SitefSettingsActivity::class.java)
+                else -> Intent(this@SettingsActivity, SitefSettingsActivity::class.java)
             }
             startActivity(intent)
             finish()
