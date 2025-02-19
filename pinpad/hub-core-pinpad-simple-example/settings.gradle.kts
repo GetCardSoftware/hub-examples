@@ -9,14 +9,6 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
-        maven {
-            isAllowInsecureProtocol = true
-            url = uri("http://192.168.1.250:8000/repository/libs-getcard/")
-            credentials {
-                username = "getcard-public"
-                password = "!V4V4xEDUl0GC\$HK*nVMtvi*Q93mjzQKZn*6U%g\$"
-            }
-        }
     }
 }
 dependencyResolutionManagement {
@@ -26,7 +18,7 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {
             isAllowInsecureProtocol = true
-            url = uri("http://192.168.1.250:8000/repository/libs-getcard/")
+            url = uri("https://dev-hubpay-getcard.cloudsg.com.br/repo/repository/getcard-public/")
             credentials {
                 username = "getcard-public"
                 password = "!V4V4xEDUl0GC\$HK*nVMtvi*Q93mjzQKZn*6U%g\$"
