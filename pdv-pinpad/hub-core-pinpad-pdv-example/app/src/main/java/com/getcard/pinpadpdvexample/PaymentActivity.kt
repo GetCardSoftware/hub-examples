@@ -64,8 +64,7 @@ class PaymentActivity : AppCompatActivity() {
 
 
             RetrofitClient.posService.startTransactionOnPos(
-//                "Bearer $token",
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInRlcm1pbmFsUGR2RFRPIjoie1wiY25walwiOlwiODAzNDUyNjcwMDAxODFcIixcImlkUGR2XCI6XCJhMmQzZmI2MC0zYjU3LTQ2ZjgtODdmNi1hZTc4ZTFiMzdjNTVcIixcImlkVGVybWluYWxcIjpcImQ2NmJhNmI3LTE5NWMtNGFkYi05ZWFiLTZhMmY5ODA0ZjM2MFwifSJ9.G2WKuwNNCE-p8z59rJ5DorSBfia0T3G2rirn01EkytY",
+                "Bearer $token",
                 paymentParams!!
             )
                 .enqueue(object : retrofit2.Callback<String> {
