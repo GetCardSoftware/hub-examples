@@ -62,16 +62,16 @@ class PaymentActivity : AppCompatActivity() {
 
             Log.d(
                 TAG,
-                "Result - Code: ${paymentResult.code} " +
+                "Result - Code: ${paymentResult.status} " +
                         "| Message: ${paymentResult.message} " +
-                        "| TransactionID: ${paymentResult.transactionId} " +
+                        "| NsuHost: ${paymentResult.nsuHost} " +
                         "| TransactionTimestamp: ${paymentResult.transactionTimestamp}"
             )
 
-            if(paymentResult.code == OperationStatus.SUCCESS) {
+            if(paymentResult.status == OperationStatus.SUCCESS) {
                 val builder = AlertDialog.Builder(this@PaymentActivity)
                 builder.setTitle("Transação Concluida")
-                builder.setMessage("ID: ${paymentResult.transactionId} | Timestamp: ${paymentResult.transactionTimestamp} \n Comprovante: ${paymentResult.costumerReceipt}")
+                builder.setMessage("ID: ${paymentResult.nsuHost} | Timestamp: ${paymentResult.transactionTimestamp} \n Comprovante: ${paymentResult.customerReceipt}")
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     finish()

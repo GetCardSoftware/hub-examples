@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, PaymentActivity::class.java)
                 intent.putExtra("TRANSACTION_PARAMS", TransactionParams(
                     amount = BigDecimal("2000"),
-                    transactionId = response.transactionId,
+                    nsuHost = response.nsuHost,
                     transactionTimestamp = response.transactionTimestamp,
                     refund = true,
                     paymentType = PaymentType.CREDIT

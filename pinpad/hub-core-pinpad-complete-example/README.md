@@ -180,7 +180,7 @@ class InitRefundActivity : AppCompatActivity() {
         binding.amountTextField.setCurrency()
 
         binding.startRefundButton.setOnClickListener {
-            val transactionId = binding.transactionIdText.string()
+            val nsuHost = binding.nsuHostText.string()
             val transactionTimestamp = binding.transactionTimestampText.string()
             val amount = binding.amountTextField.string().formatValue()
 
@@ -216,25 +216,25 @@ A **PaymentActivity** recebe um objeto da classe `TransactionParams` contendo os
 
 #### Estrutura do `TransactionParams`
 
-| Campo               | Tipo           | Descrição |
-|---------------------|---------------|-----------|
-| amount             | `BigDecimal`   | Valor da transação. |
-| paymentType        | `PaymentType`  | Modalidade do pagamento (débito ou crédito). |
-| installmentType    | `InstallmentType` | Tipo de parcelamento (à vista ou parcelado). |
-| installmentNumber  | `Int`          | Número de parcelas, se aplicável. |
-| transactionId      | `String?`      | ID da transação (necessário apenas para estorno). |
-| refund             | `Boolean`      | Indica se a operação é um estorno. |
+| Campo                | Tipo           | Descrição |
+|----------------------|---------------|-----------|
+| amount               | `BigDecimal`   | Valor da transação. |
+| paymentType          | `PaymentType`  | Modalidade do pagamento (débito ou crédito). |
+| installmentType      | `InstallmentType` | Tipo de parcelamento (à vista ou parcelado). |
+| installmentNumber    | `Int`          | Número de parcelas, se aplicável. |
+| nsuHost              | `String?`      | ID da transação (necessário apenas para estorno). |
+| refund               | `Boolean`      | Indica se a operação é um estorno. |
 | transactionTimestamp | `Long?`      | Timestamp da transação original (necessário para estorno). |
 
 #### Estrutura do `TransactionResponse`
 
-| Campo                 | Tipo           | Descrição |
-|-----------------------|---------------|-----------|
-| code                 | `OperationStatus` | Código de status da operação. |
+| Campo                | Tipo           | Descrição |
+|----------------------|---------------|-----------|
+| status               | `OperationStatus` | Código de status da operação. |
 | message              | `String`       | Mensagem de retorno da transação. |
 | transactionTimestamp | `Long`         | Timestamp da transação realizada. |
-| transactionId        | `String?`      | ID da transação (se bem-sucedida). |
-| costumerReceipt      | `String?`      | Comprovante do cliente (se disponível). |
+| nsuHost              | `String?`      | ID da transação (se bem-sucedida). |
+| customerReceipt      | `String?`      | Comprovante do cliente (se disponível). |
 | establishmentReceipt | `String?`      | Comprovante do estabelecimento (se disponível). |
 
 ### Tipos Utilizados
@@ -301,8 +301,8 @@ class PaymentActivity : AppCompatActivity() {
 
             //...
 
-            if (paymentResult.code == OperationStatus.SUCCESS) {
-            // if (refundResult.code == OperationStatus.SUCCESS) {
+            if (paymentResult.status == OperationStatus.SUCCESS) {
+            // if (refundResult.status == OperationStatus.SUCCESS) {
                 //...
 
                 val resultIntent = intent

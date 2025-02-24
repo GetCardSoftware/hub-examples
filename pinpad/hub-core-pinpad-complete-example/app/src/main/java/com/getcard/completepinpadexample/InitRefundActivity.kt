@@ -52,12 +52,12 @@ class InitRefundActivity : AppCompatActivity() {
 
 
         binding.startRefundButton.setOnClickListener {
-            val transactionId = binding.transactionIdText.string()
+            val nsuHost = binding.nsuHostText.string()
             val transactionTimestamp = binding.transactionTimestampText.string()
             val amount = binding.amountTextField.string().formatValue()
 
 
-            if (transactionId.isEmpty() || transactionTimestamp.isEmpty() || amount.isEmpty() || amount.toDouble() == 0.0) {
+            if (nsuHost.isEmpty() || transactionTimestamp.isEmpty() || amount.isEmpty() || amount.toDouble() == 0.0) {
                 Toast.makeText(
                     this,
                     "Por favor, preencha todos os campos",
@@ -70,7 +70,7 @@ class InitRefundActivity : AppCompatActivity() {
             refundIntent.putExtra(
                 "REFUND_PARAMS", TransactionParams(
                     refund = true,
-                    transactionId = transactionId,
+                    nsuHost = nsuHost,
                     transactionTimestamp = transactionTimestamp.toLong(),
                     amount = amount.toBigDecimal(),
                     paymentType = choosedPaymentType,
