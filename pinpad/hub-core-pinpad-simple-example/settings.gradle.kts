@@ -11,6 +11,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -18,10 +19,18 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {
             isAllowInsecureProtocol = true
-            url = uri("https://dev-hubpay-getcard.cloudsg.com.br/repo/repository/getcard-public/")
+            url = uri("https://dev-hubpay.tefbr.com.br/repo/repository/libs-getcard/")
+            credentials {
+                username = "admin"
+                password = providers.gradleProperty("GETCARD_HOMOLOG_PASSWORD").orNull ?: ""
+            }
+        }
+        maven {
+            isAllowInsecureProtocol = true
+            url = uri("https://dev-hubpay.tefbr.com.br/repo/repository/getcard-public/")
             credentials {
                 username = "getcard-public"
-                password = "!V4V4xEDUl0GC\$HK*nVMtvi*Q93mjzQKZn*6U%g\$"
+                password = "!V4V4xEDUl0GC\$HKnVMtvQ93mjzQKZn*6U%g\$"
             }
         }
     }
