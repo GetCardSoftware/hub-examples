@@ -20,7 +20,7 @@ signalr = "8.0.11"
 preference = "1.2.1"
 
 hubinterface = "1.0.2"
-hubcore = "1.0.2-release"
+hubcore = "1.0.2-debug"
 ##Test only
 
 [libraries]
