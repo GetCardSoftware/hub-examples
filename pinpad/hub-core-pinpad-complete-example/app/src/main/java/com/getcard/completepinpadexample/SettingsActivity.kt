@@ -26,7 +26,8 @@ class SettingsActivity : AppCompatActivity() {
         hubSettingsDAO = database.settingsDao()
 
         val items = mapOf(
-            "Sitef" to DeviceType.SITEF
+            "Sitef" to DeviceType.SITEF,
+            "Scope" to DeviceType.SCOPE
         )
         val dropdown = binding.deviceTypeDropdownMenu
 
@@ -48,6 +49,10 @@ class SettingsActivity : AppCompatActivity() {
                 DeviceType.SITEF -> Intent(
                     this@SettingsActivity,
                     SitefSettingsActivity::class.java
+                )
+                DeviceType.SCOPE -> Intent(
+                    this@SettingsActivity,
+                    ScopeSettingsActivity::class.java
                 )
 
                 else -> Intent(this@SettingsActivity, SitefSettingsActivity::class.java)
