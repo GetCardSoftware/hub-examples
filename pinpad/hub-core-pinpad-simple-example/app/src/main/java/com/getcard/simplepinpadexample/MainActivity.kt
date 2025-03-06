@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.getcard.corepinpad.DeviceType
 import com.getcard.hubinterface.transaction.PaymentType
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var deviceType: DeviceType
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             if (response != null) {
                 Log.d("PaymentActivity", "Response: $response")
                 val intent = Intent(this, PaymentActivity::class.java)
+                intent.putExtra("DEVICE_TYPE", deviceType.name)
                 intent.putExtra("TRANSACTION_PARAMS", TransactionParams(
                     amount = BigDecimal("2000"),
                     nsuHost = response.nsuHost,
@@ -55,17 +58,28 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.transactionButton.setOnClickListener {
+        binding.transactionSitefButton.setOnClickListener {
+            deviceType = DeviceType.SITEF
+            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
             startActivity(paymentIntent)
         }
 
-        binding.refundButton.setOnClickListener {
+        binding.refundSitefButton.setOnClickListener {
+            deviceType = DeviceType.SITEF
+            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
             launcher.launch(paymentIntent)
         }
 
+        binding.transactionScopeButton.setOnClickListener {
+            deviceType = DeviceType.SCOPE
+            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
+            startActivity(paymentIntent)
+        }
 
-
+        binding.refundScopeButton.setOnClickListener {
+            deviceType = DeviceType.SCOPE
+            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
+            launcher.launch(paymentIntent)
+        }
     }
-
-
 }

@@ -24,15 +24,39 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val providerConfig = PaymentProviderConfig.builder()
-            .setIp("192.168.1.227")
-            .setToken("2823-0548-7763-1206")
-            .setCompany("00000000")
-            .setTerminal("50201136")
-            .build()
+        val paymentCentral: PaymentCentral
 
-        val paymentCentral = PaymentCentral(DeviceType.SITEF, providerConfig)
+        val deviceType = intent.getStringExtra("DEVICE_TYPE")?.let { DeviceType.valueOf(it) }
 
+        if (deviceType == null) {
+            Toast.makeText(this, "DeviceType não encontrado", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+
+        when (deviceType) {
+            DeviceType.SITEF -> {
+                val providerConfig = PaymentProviderConfig.builder()
+                    .setIp("192.168.1.227")
+                    .setToken("2823-0548-7763-1206")
+                    .setCompany("00000000")
+                    .setTerminal("50201136")
+                    .build()
+
+                paymentCentral = PaymentCentral(DeviceType.SITEF, providerConfig)
+            }
+            DeviceType.SCOPE -> {
+                val providerConfig = PaymentProviderConfig.builder()
+                    .setIp("177.72.161.156")
+                    .setPort(2046u)
+                    .setCompany("1283")
+                    .setCompanyBranch("0001")
+                    .setTerminal("003")
+                    .build()
+
+                paymentCentral = PaymentCentral(DeviceType.SCOPE, providerConfig)
+            }
+        }
 
         val paymentParams = intent.getParcelableExtra<TransactionParams>("TRANSACTION_PARAMS")
 
@@ -88,5 +112,4 @@ class PaymentActivity : AppCompatActivity() {
 
         }
     }
-
 }
