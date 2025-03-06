@@ -3,6 +3,7 @@ package com.getcard.pinpadpdvexample
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,6 +28,14 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        Log.d("MainActivity", "Conexão Estabelecida (Callback)")
+        Log.d("MainActivity", "O serviço de WS não está rodando, iniciando...")
+        try {
+            val service = Intent(this, WebSocketService::class.java)
+            startForegroundService(service)
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Erro ao iniciar o serviço de WS", e)
+        }
 
         binding.transactionButton.setOnClickListener {
             val paymentIntent = Intent(this, InitTransactionActivity::class.java)

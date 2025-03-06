@@ -12,6 +12,8 @@ import kotlinx.coroutines.runBlocking
 
 class Utils {
     companion object {
+        
+
         fun <T> setupDropdownMenu(
             context: Context,
             textView: AutoCompleteTextView,

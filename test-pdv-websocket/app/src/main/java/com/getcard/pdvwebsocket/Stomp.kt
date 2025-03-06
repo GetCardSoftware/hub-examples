@@ -64,7 +64,7 @@ class Stomp(private val context: Context) {
                     val gson = Gson()
                     transactionResponse = gson.fromJson(msg, TransactionResponse::class.java)
                     Log.d(TAG,"Received sub == : $transactionResponse")
-                    loadingDialog.updateMessageAndDismiss("Transação realizada com sucesso")
+                    loadingDialog.updateMessageAndDismiss(transactionResponse.message.toString(), success = transactionResponse.status == "SUCCESS")
                 }
             }
 
@@ -84,7 +84,7 @@ class Stomp(private val context: Context) {
                 installmentNumber = 1,
                 amount = 100,
                 refund = false,
-                transactionId = ""
+                nsuHost = ""
             )
 
             val gson = Gson()
@@ -113,7 +113,7 @@ class Stomp(private val context: Context) {
         val installmentNumber: Int,
         val amount: Int,
         val refund: Boolean,
-        val transactionId: String
+        val nsuHost: String
     )
 
     data class TransactionResponse(
@@ -121,7 +121,7 @@ class Stomp(private val context: Context) {
         val status: String? = "",
         val message: String? = "",
         val transactionTimestamp: Timestamp? = null,
-        val transactionId: String? = null,
+        val nsuHost: String? = null,
         val customerReceipt: String? = null,
         val establishmentReceipt: String? = null,
         val terminalToken: String? = null

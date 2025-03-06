@@ -63,16 +63,16 @@ class RefundActivity : AppCompatActivity() {
 
             Log.d(
                 TAG,
-                "Result - Code: ${refundResult.code} " +
-                        "| Message: ${refundResult.message} " +
-                        "| TransactionID: ${refundResult.transactionId} " +
-                        "| TransactionTimestamp: ${refundResult.transactionTimestamp}"
+                "Result - Code: $refundResult"
             )
 
-            if (refundResult.code == OperationStatus.SUCCESS) {
+            if (refundResult.status == OperationStatus.SUCCESS) {
                 val builder = AlertDialog.Builder(this@RefundActivity)
                 builder.setTitle("Transação Concluida")
-                builder.setMessage("ID: ${refundResult.transactionId} | Timestamp: ${refundResult.transactionTimestamp} \n Comprovante: ${refundResult.costumerReceipt}")
+                builder.setMessage(
+                    "Nsu Host: ${refundResult.nsuHost} | Timestamp: ${refundResult.transactionTimestamp} " +
+                            "\n Comprovante: ${refundResult.customerReceipt}"
+                )
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     finish()

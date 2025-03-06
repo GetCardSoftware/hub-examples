@@ -11,6 +11,5 @@ interface PosService {
     fun startTransactionOnPos(
         @Header("Authorization") token: String,
         @Body request: TransactionParams
-    ): Call<String>
-
+    ): Call<Unit>
 }

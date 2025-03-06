@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("androidx.room")
+    id("kotlin-parcelize")
+
+    kotlin("plugin.serialization") version "2.1.0"
+
 }
 
 android {
@@ -92,4 +96,9 @@ dependencies {
     //Payment hub
     implementation(libs.hubinterface)
     implementation(libs.hubcore)
+
+
+    implementation(libs.krossbow.stomp.core)
+    implementation(libs.krossbow.websocket.okhttp)
+    implementation(libs.krossbow.stomp.kxserialization.json)
 }

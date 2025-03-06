@@ -9,20 +9,21 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.getcard.pdvwebsocket.R
 
 class LoadingDialog(private val context: Context) {
     private var dialog: Dialog? = null
     private var textView: TextView? = null
     private var progressBar: ProgressBar? = null
-    private var imageView: ImageView? = null
+    private var successImageView: ImageView? = null
+    private var errorImageView: ImageView? = null
 
     fun show() {
         if (dialog == null) {
             dialog = Dialog(context).apply {
                 val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null)
                 textView = view.findViewById(R.id.loading_text)
-                imageView = view.findViewById(R.id.checkmark)
+                successImageView = view.findViewById(R.id.checkmark)
+                errorImageView = view.findViewById(R.id.cancel)
                 progressBar = view.findViewById(R.id.loading_spinner)
                 setContentView(view)
                 setCancelable(false)
@@ -32,13 +33,26 @@ class LoadingDialog(private val context: Context) {
         dialog?.show()
     }
 
-    fun dismiss() {
+    private fun dismiss() {
         dialog?.dismiss()
+        dialog = null
     }
 
-    fun updateMessageAndDismiss(newMessage: String, delayMillis: Long = 3000) {
+    fun updateMessageAndDismiss(
+        newMessage: String,
+        delayMillis: Long = 3000,
+        success: Boolean = true
+    ) {
+
         textView?.text = newMessage
-        imageView?.visibility = View.VISIBLE
+
+        if (success) {
+            successImageView?.visibility = View.VISIBLE
+        } else {
+            errorImageView?.visibility = View.VISIBLE
+        }
+
+
         progressBar?.visibility = View.GONE
         Handler(Looper.getMainLooper()).postDelayed({
             dismiss()
