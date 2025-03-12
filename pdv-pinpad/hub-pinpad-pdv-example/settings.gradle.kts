@@ -36,6 +36,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Hub Core Pinpad PDV Example"
+rootProject.name = "Hub Pinpad PDV Example"
 include(":app")
  

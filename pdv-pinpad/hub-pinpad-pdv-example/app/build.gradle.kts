@@ -95,8 +95,8 @@ dependencies {
 
     //Payment hub
     implementation(libs.hubinterface)
-    implementation(libs.hubcore)
-
+    implementation(libs.hub.scope.provider)
+    implementation(libs.hub.sitef.provider)
 
     implementation(libs.krossbow.stomp.core)
     implementation(libs.krossbow.websocket.okhttp)

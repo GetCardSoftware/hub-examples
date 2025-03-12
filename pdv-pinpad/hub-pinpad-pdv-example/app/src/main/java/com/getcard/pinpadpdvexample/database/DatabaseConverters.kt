@@ -1,18 +1,18 @@
 package com.getcard.pinpadpdvexample.database
 
 import androidx.room.TypeConverter
-import com.getcard.corepinpad.DeviceType
 import com.getcard.hubinterface.config.PinpadType
+import com.getcard.pinpadpdvexample.PaymentProviderType
 
 class DatabaseConverters {
     @TypeConverter
-    fun fromDeviceType(deviceType: DeviceType): String {
-        return deviceType.name
+    fun fromPaymentProviderType(paymentProviderType: PaymentProviderType): String {
+        return paymentProviderType.name
     }
 
     @TypeConverter
-    fun toDeviceType(deviceTypeString: String): DeviceType {
-        return DeviceType.valueOf(deviceTypeString)
+    fun toPaymentProviderType(paymentProviderTypeString: String): PaymentProviderType {
+        return PaymentProviderType.valueOf(paymentProviderTypeString)
     }
 
     @TypeConverter

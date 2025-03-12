@@ -5,8 +5,10 @@ import android.util.Log
 import android.widget.Toast
 import com.getcard.pinpadpdvexample.database.HubDatabase
 import com.getcard.pinpadpdvexample.http.TransactionResponseDTO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import org.hildan.krossbow.stomp.StompClient
 import org.hildan.krossbow.stomp.StompSession
@@ -56,11 +58,13 @@ class Stomp(private val context: Context) {
             Log.d(TAG, "Conectado ao WebSocket")
         } catch (e: Exception) {
             Log.e(TAG, "Erro ao conectar ao WebSocket, verifique o token! \n${e.message}")
-            Toast.makeText(
-                context,
-                "Erro ao conectar ao WebSocket, verifique o token!",
-                Toast.LENGTH_LONG
-            ).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(
+                    context,
+                    "Erro ao conectar ao WebSocket, verifique o token!",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 

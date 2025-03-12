@@ -2,15 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "157dfaf83d816826a858d9cc6d04b3c7",
+    "identityHash": "8837f6ec7a6792109c968dfec0452d2a",
     "entities": [
       {
         "tableName": "settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`device_type` TEXT NOT NULL, `token` TEXT NOT NULL, PRIMARY KEY(`device_type`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`payment_provider_type` TEXT NOT NULL, `token` TEXT NOT NULL, PRIMARY KEY(`payment_provider_type`))",
         "fields": [
           {
-            "fieldPath": "deviceType",
-            "columnName": "device_type",
+            "fieldPath": "paymentProviderType",
+            "columnName": "payment_provider_type",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -24,7 +24,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "device_type"
+            "payment_provider_type"
           ]
         },
         "indices": [],
@@ -84,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '157dfaf83d816826a858d9cc6d04b3c7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8837f6ec7a6792109c968dfec0452d2a')"
     ]
   }
 }
