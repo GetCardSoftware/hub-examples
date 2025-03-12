@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context=".ChooseDeviceActivity">
+    tools:context=".SettingsActivity">
 
     <TextView
         android:id="@+id/title_text"
@@ -31,19 +31,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/device_type_layout"
+            android:id="@+id/payment_provider_layout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="18dp"
             android:layout_marginTop="18dp"
-            android:hint="@string/device_type"
+            android:hint="@string/payment_provider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/form_layout">
 
             <AutoCompleteTextView
-                android:id="@+id/device_type_dropdown_menu"
+                android:id="@+id/payment_provider_dropdown_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none" />
@@ -60,7 +60,7 @@
             android:text="@string/next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/device_type_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/payment_provider_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

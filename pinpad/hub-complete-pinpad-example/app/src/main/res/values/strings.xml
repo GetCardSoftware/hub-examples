@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Hub Core Pinpad Complete Example</string>
+    <string name="app_name">Hub Complete Pinpad Example</string>
 
     <!--Settings Related-->
     <string name="goto_settings">Ir para Configurações</string>
     <string name="settings">Configurações</string>
-    <string name="device_type">Tipo de Dispositivo</string>
+    <string name="payment_provider">Provedor de Pagamentos</string>
     <!--####################################-->
 
     <!--Scope Settings Related-->

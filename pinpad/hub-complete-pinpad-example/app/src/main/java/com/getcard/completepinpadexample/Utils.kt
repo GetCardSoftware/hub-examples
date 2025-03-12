@@ -5,8 +5,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import com.getcard.completepinpadexample.database.HubDatabase
-import com.getcard.corepinpad.DeviceType
-import com.getcard.corepinpad.PaymentCentral
+import com.getcard.hub.scopeprovider.pinpad.ScopeProvider
+import com.getcard.hub.sitefprovider.pinpad.SitefProvider
+import com.getcard.hubinterface.PaymentProvider
 import com.getcard.hubinterface.config.PaymentProviderConfig
 import kotlinx.coroutines.runBlocking
 
@@ -37,20 +38,20 @@ class Utils {
             }
         }
 
-        fun getPaymentCentral(context: Context): PaymentCentral? {
+        fun getPaymentProvider(context: Context): PaymentProvider? {
 
             val database = HubDatabase.getInstance(context)
             val hubSettingsDAO = database.settingsDao()
 
-            val deviceType = runBlocking {
-                hubSettingsDAO.findFirst()?.deviceType
+            val paymentProviderType = runBlocking {
+                hubSettingsDAO.findFirst()?.paymentProviderType
             }
-            if (deviceType == null) {
+            if (paymentProviderType == null) {
                 return null
             }
 
-            val providerConfig = when (deviceType) {
-                DeviceType.SITEF -> {
+            val paymentProvider = when (paymentProviderType) {
+                PaymentProviderType.SITEF -> {
                     val sitefSettings = runBlocking {
                         database.sitefSettingsDao().findFirst()
                     }
@@ -61,9 +62,9 @@ class Utils {
                             .setCompany(it.company)
                             .setTerminal(it.terminal)
                             .build()
-                    }
+                    }?.let { SitefProvider(it) }
                 }
-                DeviceType.SCOPE -> {
+                PaymentProviderType.SCOPE -> {
                     val scopeSettings = runBlocking {
                         database.scopeSettingsDao().findFirst()
                     }
@@ -75,17 +76,13 @@ class Utils {
                             .setCompanyBranch(it.companyBranch)
                             .setTerminal(it.terminal)
                             .build()
-                    }
+                    }?.let { ScopeProvider(it) }
                 }
 
                 else -> null
             }
 
-            if (providerConfig == null) {
-                return null
-            }
-
-            return PaymentCentral(deviceType, providerConfig)
+            return paymentProvider
         }
 
     }

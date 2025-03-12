@@ -17,9 +17,9 @@ class RefundActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val paymentCentral = Utils.getPaymentCentral(this)
+        val paymentProvider = Utils.getPaymentProvider(this)
 
-        if (paymentCentral == null) {
+        if (paymentProvider == null) {
             Toast.makeText(
                 this,
                 "Nenhuma configuração de pagamento encontrada",
@@ -43,7 +43,7 @@ class RefundActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val refundResult = try {
-                paymentCentral.pay(
+                paymentProvider.startTransaction(
                     this@RefundActivity,
                     refundParams
                 )

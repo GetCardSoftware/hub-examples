@@ -7,7 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import com.getcard.completepinpadexample.database.HubDatabase
 import com.getcard.completepinpadexample.database.daos.HubSettingsDao
 import com.getcard.completepinpadexample.databinding.ActivitySettingsBinding
-import com.getcard.corepinpad.DeviceType
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
@@ -15,7 +14,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var database: HubDatabase
     private lateinit var hubSettingsDAO: HubSettingsDao
-    private var choosedDevice = DeviceType.SITEF
+    private var choosedProvider = PaymentProviderType.SITEF
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,31 +25,31 @@ class SettingsActivity : AppCompatActivity() {
         hubSettingsDAO = database.settingsDao()
 
         val items = mapOf(
-            "Sitef" to DeviceType.SITEF,
-            "Scope" to DeviceType.SCOPE
+            "Sitef" to PaymentProviderType.SITEF,
+            "Scope" to PaymentProviderType.SCOPE
         )
-        val dropdown = binding.deviceTypeDropdownMenu
+        val dropdown = binding.paymentProviderDropdownMenu
 
-        Utils.setupDropdownMenu(this, dropdown, items, value = choosedDevice) {
-            choosedDevice = it
+        Utils.setupDropdownMenu(this, dropdown, items, value = choosedProvider) {
+            choosedProvider = it
         }
 
         lifecycleScope.launch {
             val settings = hubSettingsDAO.findFirst()
             if (settings != null) {
-                binding.deviceTypeDropdownMenu.setSelection(
-                    items.values.indexOf(settings.deviceType)
+                binding.paymentProviderDropdownMenu.setSelection(
+                    items.values.indexOf(settings.paymentProviderType)
                 )
             }
         }
 
         binding.nextButton.setOnClickListener {
-            val intent = when (choosedDevice) {
-                DeviceType.SITEF -> Intent(
+            val intent = when (choosedProvider) {
+                PaymentProviderType.SITEF -> Intent(
                     this@SettingsActivity,
                     SitefSettingsActivity::class.java
                 )
-                DeviceType.SCOPE -> Intent(
+                PaymentProviderType.SCOPE -> Intent(
                     this@SettingsActivity,
                     ScopeSettingsActivity::class.java
                 )

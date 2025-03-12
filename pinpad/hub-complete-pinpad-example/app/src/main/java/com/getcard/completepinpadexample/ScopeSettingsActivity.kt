@@ -12,7 +12,6 @@ import com.getcard.completepinpadexample.database.daos.ScopeSettingsDao
 import com.getcard.completepinpadexample.database.models.HubSettingsModel
 import com.getcard.completepinpadexample.database.models.ScopeSettingsModel
 import com.getcard.completepinpadexample.databinding.ActivityScopeSettingsBinding
-import com.getcard.corepinpad.DeviceType
 import kotlinx.coroutines.launch
 
 class ScopeSettingsActivity : AppCompatActivity() {
@@ -81,7 +80,7 @@ class ScopeSettingsActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             scopeSettingsDao.insert(scopeSettings)
-            hubSettingsDao.insert(HubSettingsModel(deviceType = DeviceType.SCOPE))
+            hubSettingsDao.insert(HubSettingsModel(paymentProviderType = PaymentProviderType.SCOPE))
             Toast.makeText(
                 this@ScopeSettingsActivity,
                 "Configurações salvas com sucesso!",

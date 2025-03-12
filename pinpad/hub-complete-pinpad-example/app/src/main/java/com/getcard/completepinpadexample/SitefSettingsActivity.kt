@@ -11,7 +11,6 @@ import com.getcard.completepinpadexample.database.daos.SitefSettingsDao
 import com.getcard.completepinpadexample.database.models.HubSettingsModel
 import com.getcard.completepinpadexample.database.models.SitefSettingsModel
 import com.getcard.completepinpadexample.databinding.ActivitySitefSettingsBinding
-import com.getcard.corepinpad.DeviceType
 import kotlinx.coroutines.launch
 
 class SitefSettingsActivity : AppCompatActivity() {
@@ -79,7 +78,7 @@ class SitefSettingsActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             sitefSettingsDao.insert(sitefSettings)
-            hubSettingsDao.insert(HubSettingsModel(deviceType = DeviceType.SITEF))
+            hubSettingsDao.insert(HubSettingsModel(paymentProviderType = PaymentProviderType.SITEF))
             Toast.makeText(
                 this@SitefSettingsActivity,
                 "Configurações salvas com sucesso!",
