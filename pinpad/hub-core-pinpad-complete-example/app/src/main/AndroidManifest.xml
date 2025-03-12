@@ -30,9 +30,12 @@
             android:exported="false" />
 
         <activity
-            android:name=".SitefSettingsActivity"
+            android:name=".ScopeSettingsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".SitefSettingsActivity"
+            android:exported="false" />
 
         <activity android:name=".PaymentActivity" />
 

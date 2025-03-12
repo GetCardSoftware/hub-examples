@@ -10,5 +10,6 @@ import com.getcard.corepinpad.DeviceType
     tableName = TablesName.Settings.MAIN,
 )
 data class HubSettingsModel(
-    @PrimaryKey @ColumnInfo(name = "device_type") val deviceType: DeviceType,
+    @PrimaryKey @ColumnInfo(name = "id") val id: Int = 1,
+    @ColumnInfo(name = "device_type") val deviceType: DeviceType,
 )

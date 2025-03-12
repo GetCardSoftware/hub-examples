@@ -63,6 +63,20 @@ class Utils {
                             .build()
                     }
                 }
+                DeviceType.SCOPE -> {
+                    val scopeSettings = runBlocking {
+                        database.scopeSettingsDao().findFirst()
+                    }
+                    scopeSettings?.let {
+                        PaymentProviderConfig.builder()
+                            .setIp(it.serverIp)
+                            .setPort(it.serverPort.toUInt())
+                            .setCompany(it.company)
+                            .setCompanyBranch(it.companyBranch)
+                            .setTerminal(it.terminal)
+                            .build()
+                    }
+                }
 
                 else -> null
             }

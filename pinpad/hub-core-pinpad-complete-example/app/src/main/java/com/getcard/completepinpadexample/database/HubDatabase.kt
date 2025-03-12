@@ -6,12 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.getcard.completepinpadexample.database.daos.HubSettingsDao
+import com.getcard.completepinpadexample.database.daos.ScopeSettingsDao
 import com.getcard.completepinpadexample.database.daos.SitefSettingsDao
 import com.getcard.completepinpadexample.database.models.HubSettingsModel
+import com.getcard.completepinpadexample.database.models.ScopeSettingsModel
 import com.getcard.completepinpadexample.database.models.SitefSettingsModel
 
 @Database(
-    entities = [HubSettingsModel::class, SitefSettingsModel::class],
+    entities = [HubSettingsModel::class, ScopeSettingsModel::class, SitefSettingsModel::class],
     version = 1,
     exportSchema = true,
     autoMigrations = [
@@ -23,6 +25,7 @@ import com.getcard.completepinpadexample.database.models.SitefSettingsModel
 abstract class HubDatabase : RoomDatabase() {
     abstract fun settingsDao(): HubSettingsDao
     abstract fun sitefSettingsDao(): SitefSettingsDao
+    abstract fun scopeSettingsDao(): ScopeSettingsDao
 
     companion object {
         @Volatile

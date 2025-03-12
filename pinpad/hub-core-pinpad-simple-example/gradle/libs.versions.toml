@@ -19,8 +19,8 @@ rxandroid = "3.0.0"
 signalr = "8.0.11"
 preference = "1.2.1"
 
-hubinterface = "1.0.2"
-hubcore = "1.0.2-debug"
+hubinterface = "2.0.0"
+hubcore = "1.1.0-debug"
 ##Test only
 
 [libraries]
