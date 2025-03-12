@@ -37,6 +37,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Hub Core Simple Pinpad Example"
+rootProject.name = "Hub Simple Pinpad Example"
 include(":app")
  

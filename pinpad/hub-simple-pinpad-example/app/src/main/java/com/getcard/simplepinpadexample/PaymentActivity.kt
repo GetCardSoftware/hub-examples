@@ -6,9 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.getcard.corepinpad.DeviceType
-import com.getcard.corepinpad.PaymentCentral
+import com.getcard.hub.scopeprovider.pinpad.ScopeProvider
+import com.getcard.hub.sitefprovider.pinpad.SitefProvider
 import com.getcard.hubinterface.OperationStatus
+import com.getcard.hubinterface.PaymentProvider
 import com.getcard.hubinterface.config.PaymentProviderConfig
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
@@ -24,18 +25,17 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val paymentCentral: PaymentCentral
+        val paymentProvider: PaymentProvider
 
-        val deviceType = intent.getStringExtra("DEVICE_TYPE")?.let { DeviceType.valueOf(it) }
-
-        if (deviceType == null) {
-            Toast.makeText(this, "DeviceType não encontrado", Toast.LENGTH_LONG).show()
+        val paymentAcquirer = intent.getStringExtra("PAYMENT_ACQUIRER")?.let { PaymentAcquirer.valueOf(it) }
+        if (paymentAcquirer == null) {
+            Toast.makeText(this, "PAYMENT_ACQUIRER não encontrado", Toast.LENGTH_LONG).show()
             finish()
             return
         }
 
-        when (deviceType) {
-            DeviceType.SITEF -> {
+        when (paymentAcquirer) {
+            PaymentAcquirer.SITEF -> {
                 val providerConfig = PaymentProviderConfig.builder()
                     .setIp("192.168.1.227")
                     .setToken("2823-0548-7763-1206")
@@ -43,9 +43,9 @@ class PaymentActivity : AppCompatActivity() {
                     .setTerminal("50201136")
                     .build()
 
-                paymentCentral = PaymentCentral(DeviceType.SITEF, providerConfig)
+                paymentProvider = SitefProvider(providerConfig)
             }
-            DeviceType.SCOPE -> {
+            PaymentAcquirer.SCOPE -> {
                 val providerConfig = PaymentProviderConfig.builder()
                     .setIp("177.72.161.156")
                     .setPort(2046u)
@@ -54,22 +54,22 @@ class PaymentActivity : AppCompatActivity() {
                     .setTerminal("003")
                     .build()
 
-                paymentCentral = PaymentCentral(DeviceType.SCOPE, providerConfig)
+                paymentProvider = ScopeProvider(providerConfig)
             }
         }
 
-        val paymentParams = intent.getParcelableExtra<TransactionParams>("TRANSACTION_PARAMS")
+        val transactionParams = intent.getParcelableExtra<TransactionParams>("TRANSACTION_PARAMS")
 
-        if(paymentParams == null) {
+        if(transactionParams == null) {
             Toast.makeText(this, "Nenhum parâmetro transação encontrado", Toast.LENGTH_LONG).show()
             finish()
             return
         }
-        Log.d("PaymentActivity", "PaymentParams: $paymentParams")
+        Log.d("PaymentActivity", "PaymentParams: $transactionParams")
 
         lifecycleScope.launch {
             val paymentResult = try {
-                paymentCentral.pay(this@PaymentActivity, paymentParams)
+                paymentProvider.startTransaction(this@PaymentActivity, transactionParams)
             } catch (e: Exception) {
                 Toast.makeText(
                     this@PaymentActivity,
@@ -104,6 +104,7 @@ class PaymentActivity : AppCompatActivity() {
                 dialog.show()
 
                 val resultIntent = intent
+                resultIntent.putExtra("PAYMENT_ACQUIRER", paymentAcquirer)
                 resultIntent.putExtra("TRANSACTION_RESULT", paymentResult)
                 setResult(RESULT_OK, resultIntent)
             }else{

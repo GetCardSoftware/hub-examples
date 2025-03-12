@@ -66,6 +66,7 @@ dependencies {
 
     //Payment hub
     implementation(libs.hubinterface)
-    implementation(libs.hubcore)
+    implementation(libs.hub.scope.provider)
+    implementation(libs.hub.sitef.provider)
 
  }

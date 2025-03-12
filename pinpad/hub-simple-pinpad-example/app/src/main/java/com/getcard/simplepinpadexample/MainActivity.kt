@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.getcard.corepinpad.DeviceType
 import com.getcard.hubinterface.transaction.PaymentType
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
@@ -19,8 +18,6 @@ import java.math.BigDecimal
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    private lateinit var deviceType: DeviceType
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -42,11 +39,12 @@ class MainActivity : AppCompatActivity() {
         ))
 
         val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val paymentAcquirer = result.data?.getStringExtra("PAYMENT_ACQUIRER")
             val response = result.data?.getParcelableExtra<TransactionResponse>("TRANSACTION_RESULT")
             if (response != null) {
                 Log.d("PaymentActivity", "Response: $response")
                 val intent = Intent(this, PaymentActivity::class.java)
-                intent.putExtra("DEVICE_TYPE", deviceType.name)
+                intent.putExtra("PAYMENT_ACQUIRER", paymentAcquirer)
                 intent.putExtra("TRANSACTION_PARAMS", TransactionParams(
                     amount = BigDecimal("2000"),
                     nsuHost = response.nsuHost,
@@ -59,26 +57,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.transactionSitefButton.setOnClickListener {
-            deviceType = DeviceType.SITEF
-            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
+            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SITEF.name)
             startActivity(paymentIntent)
         }
 
         binding.refundSitefButton.setOnClickListener {
-            deviceType = DeviceType.SITEF
-            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
+            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SITEF.name)
             launcher.launch(paymentIntent)
         }
 
         binding.transactionScopeButton.setOnClickListener {
-            deviceType = DeviceType.SCOPE
-            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
+            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SCOPE.name)
             startActivity(paymentIntent)
         }
 
         binding.refundScopeButton.setOnClickListener {
-            deviceType = DeviceType.SCOPE
-            paymentIntent.putExtra("DEVICE_TYPE", deviceType.name)
+            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SCOPE.name)
             launcher.launch(paymentIntent)
         }
     }
