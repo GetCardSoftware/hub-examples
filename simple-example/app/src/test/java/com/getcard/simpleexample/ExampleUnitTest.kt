@@ -1,4 +1,4 @@
-package com.getcard.simplepinpadexample
+package com.getcard.simpleexample
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

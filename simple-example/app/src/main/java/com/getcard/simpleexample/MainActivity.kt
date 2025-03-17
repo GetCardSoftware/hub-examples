@@ -1,4 +1,4 @@
-package com.getcard.simplepinpadexample
+package com.getcard.simpleexample
 
 
 import android.content.Intent
@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.getcard.hubinterface.transaction.PaymentType
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
-import com.getcard.simplepinpadexample.databinding.ActivityMainBinding
+import com.getcard.simpleexample.databinding.ActivityMainBinding
 import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
@@ -56,24 +56,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.transactionSitefButton.setOnClickListener {
-            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SITEF.name)
+        binding.transactionButton.setOnClickListener {
             startActivity(paymentIntent)
         }
 
-        binding.refundSitefButton.setOnClickListener {
-            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SITEF.name)
+        binding.refundButton.setOnClickListener {
             launcher.launch(paymentIntent)
         }
 
-        binding.transactionScopeButton.setOnClickListener {
-            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SCOPE.name)
-            startActivity(paymentIntent)
-        }
-
-        binding.refundScopeButton.setOnClickListener {
-            paymentIntent.putExtra("PAYMENT_ACQUIRER", PaymentAcquirer.SCOPE.name)
-            launcher.launch(paymentIntent)
-        }
     }
 }

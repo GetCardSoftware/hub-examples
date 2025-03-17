@@ -5,11 +5,11 @@ plugins {
 
 android {
 
-    namespace = "com.getcard.simplepinpadexample"
+    namespace = "com.getcard.simpleexample"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.getcard.simplepinpadexample"
+        applicationId = "com.getcard.simpleexample"
         minSdk = 26
         lint.targetSdk = 35
         versionCode = 1
@@ -19,6 +19,15 @@ android {
     }
 
 
+    signingConfigs {
+        create("gertecDevelopment") {
+            storeFile = file("../key/GPOS700/swex-gpos700-devel.jks")
+            storePassword = "swpos123456"
+            keyPassword = "SWex123"
+            keyAlias = "enhanced"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -26,6 +35,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("gertecDevelopment")
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("gertecDevelopment")
         }
     }
 
@@ -65,6 +78,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Payment hub
-    implementation(libs.hub.scope.provider)
     implementation(libs.hub.sitef.provider)
  }

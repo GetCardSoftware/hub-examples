@@ -18,7 +18,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            isAllowInsecureProtocol = true
             url = uri("https://dev-hubpay.tefbr.com.br/repo/repository/libs-getcard/")
             credentials {
                 username = "admin"
@@ -36,6 +35,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Hub Pinpad PDV Example"
+rootProject.name = "Hub Simple Example"
 include(":app")
  
