@@ -21,9 +21,8 @@ preference = "1.2.1"
 
 krossbowStompCore = "7.0.0"
 
-hubinterface = "2.0.0"
-hubscopeprovider = "1.1.1-debug"
-hubsitefprovider = "1.0.2-debug"
+hubscopeprovider = "1.0.0-debug"
+hubsitefprovider = "1.0.0-debug"
 
 [libraries]
 krossbow-stomp-core = { module = "org.hildan.krossbow:krossbow-stomp-core", version.ref = "krossbowStompCore" }
@@ -48,7 +47,6 @@ signalr = { module = "com.microsoft.signalr:signalr", version.ref = "signalr" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 
 # Hub
-hubinterface = { module = "com.getcard.hub:hub-interface", version.ref = "hubinterface" }
 hub-scope-provider = { module = "com.getcard.hub.pinpad:scope-provider", version.ref = "hubscopeprovider" }
 hub-sitef-provider = { module = "com.getcard.hub.pinpad:sitef-provider", version.ref = "hubsitefprovider" }
 

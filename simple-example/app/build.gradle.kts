@@ -65,8 +65,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Payment hub
-    implementation(libs.hubinterface)
     implementation(libs.hub.scope.provider)
     implementation(libs.hub.sitef.provider)
-
  }
