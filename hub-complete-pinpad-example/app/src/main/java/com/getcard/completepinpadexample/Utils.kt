@@ -79,7 +79,6 @@ class Utils {
                     }?.let { ScopeProvider(it) }
                 }
 
-                else -> null
             }
 
             return paymentProvider

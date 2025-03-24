@@ -54,7 +54,6 @@ class SettingsActivity : AppCompatActivity() {
                     ScopeSettingsActivity::class.java
                 )
 
-                else -> Intent(this@SettingsActivity, SitefSettingsActivity::class.java)
             }
             startActivity(intent)
             finish()
