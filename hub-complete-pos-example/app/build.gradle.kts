@@ -7,13 +7,13 @@ plugins {
 
 android {
 
-    namespace = "com.getcard.completepinpadexample"
+    namespace = "com.getcard.completeposexample"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.getcard.completepinpadexample"
+        applicationId = "com.getcard.completeposexample"
         minSdk = 26
-        lint.targetSdk = 35
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -48,10 +48,10 @@ android {
 
     signingConfigs {
         create("gertecDevelopment") {
-            storeFile = file("../key/GPOS700/swex-gpos700-devel.jks")
-            storePassword = "swpos123456"
-            keyPassword = "SWex123"
-            keyAlias = "enhanced"
+            storeFile = file("../key/Development_GertecDeveloper_EnhancedAPP.jks")
+            storePassword = "Development@GertecDeveloper2018"
+            keyAlias = "developmentgertecdeveloper_enhancedapp"
+            keyPassword = "Development@GertecDeveloper2018"
         }
     }
 

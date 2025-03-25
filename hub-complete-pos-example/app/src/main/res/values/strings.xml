@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hub Complete Pinpad Example</string>
+    <string name="app_name">Hub Complete POS Example</string>
 
     <!--Settings Related-->
     <string name="goto_settings">Ir para Configurações</string>
