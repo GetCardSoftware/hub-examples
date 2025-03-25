@@ -86,6 +86,13 @@ class InitTransactionActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            if (chosenInstallmentType == InstallmentType.INSTALLMENTS && installmentNumber.toInt() < 2) {
+                binding.installmentNumberField.error = "Parcelamento exige ao menos 2 parcelas"
+                Toast.makeText(this, "Parcelamento exige ao menos 2 parcelas", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+
             val transactionIntent = Intent(this, PaymentActivity::class.java)
             transactionIntent.putExtra(
                 "TRANSACTION_PARAMS",
