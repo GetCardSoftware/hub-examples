@@ -17,10 +17,13 @@ import com.getcard.hubinterface.transaction.TransactionParams
 
 class InitTransactionActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityInitTransactionBinding
-    private var choosedInstallmentType: InstallmentType = InstallmentType.ONE_TIME
-    private var choosedPaymentType: PaymentType = PaymentType.CREDIT
+    companion object {
+        private const val TAG = "InitTransactionActivity"
+    }
 
+    private lateinit var binding: ActivityInitTransactionBinding
+    private var chosenInstallmentType: InstallmentType = InstallmentType.ONE_TIME
+    private var chosenPaymentType: PaymentType = PaymentType.CREDIT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,23 +45,22 @@ class InitTransactionActivity : AppCompatActivity() {
             "Parcelado" to InstallmentType.INSTALLMENTS
         )
 
-
         val paymentTypeDropdown = binding.paymentTypeDropdownMenu
         Utils.setupDropdownMenu(
             this@InitTransactionActivity,
             paymentTypeDropdown,
             paymentTypes,
-            value = choosedPaymentType
-        ) { choosedPaymentType = it }
+            value = chosenPaymentType
+        ) { chosenPaymentType = it }
 
         val installmentTypeDropdown = binding.installmentDropdownMenu
         Utils.setupDropdownMenu(
             this@InitTransactionActivity,
             installmentTypeDropdown,
             installmentTypes,
-            value = choosedInstallmentType
+            value = chosenInstallmentType
         ) {
-            choosedInstallmentType = it
+            chosenInstallmentType = it
             if (it == InstallmentType.INSTALLMENTS) {
                 binding.installmentNumberField.isEnabled = true
             } else {
@@ -83,17 +85,18 @@ class InitTransactionActivity : AppCompatActivity() {
                 Toast.makeText(this, "Digite o número de parcelas", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val intent = Intent(this, PaymentActivity::class.java)
-            intent.putExtra(
+
+            val transactionIntent = Intent(this, PaymentActivity::class.java)
+            transactionIntent.putExtra(
                 "TRANSACTION_PARAMS",
                 TransactionParams(
                     value.toBigDecimal(),
-                    choosedPaymentType,
-                    choosedInstallmentType,
+                    chosenPaymentType,
+                    chosenInstallmentType,
                     installmentNumber.toInt()
                 )
             )
-            startActivity(intent)
+            startActivity(transactionIntent)
         }
 
     }

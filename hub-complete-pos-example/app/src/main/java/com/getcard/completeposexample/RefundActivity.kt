@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.getcard.completeposexample.InitRefundActivity.Companion.TAG
 import com.getcard.completeposexample.database.HubDatabase
 import com.getcard.hubinterface.OperationStatus
 import com.getcard.hubinterface.transaction.TransactionParams
@@ -14,6 +13,10 @@ import com.getcard.hubinterface.transaction.TransactionResponse
 import kotlinx.coroutines.launch
 
 class RefundActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "RefundActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +46,7 @@ class RefundActivity : AppCompatActivity() {
             finish()
             return
         }
-        Log.d(
-            TAG,
-            "Refund Params -> $refundParams"
-        )
+        Log.d(TAG, "Refund Params -> $refundParams")
 
         lifecycleScope.launch {
             val refundResult = try {
@@ -93,9 +93,10 @@ class RefundActivity : AppCompatActivity() {
                     "ID: ${refundResult.nsuHost} | Timestamp: ${refundResult.transactionTimestamp} \n" +
                             " Comprovante: $receipts"
                 )
+                builder.setOnDismissListener { finish() }
+
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
-                    finish()
                 }
 
                 builder.setNeutralButton("Imprimir") { dialog, _ ->
@@ -103,7 +104,6 @@ class RefundActivity : AppCompatActivity() {
                         paymentProvider.print(this@RefundActivity, receipts)
                     }
                     dialog.dismiss()
-                    finish()
                 }
                 val dialog = builder.create()
                 dialog.show()

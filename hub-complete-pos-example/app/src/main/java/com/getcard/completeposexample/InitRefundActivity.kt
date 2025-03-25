@@ -15,16 +15,15 @@ import java.math.BigDecimal
 class InitRefundActivity : AppCompatActivity() {
 
     companion object {
-        const val TAG = "RefundActivity"
+        private const val TAG = "InitRefundActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val launcher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
-                finish()
-            }
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            finish()
+        }
 
         lifecycleScope.launch {
             val transactionModel =

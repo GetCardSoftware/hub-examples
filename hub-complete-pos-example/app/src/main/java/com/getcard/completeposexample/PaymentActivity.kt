@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class PaymentActivity : AppCompatActivity() {
 
     companion object {
-        const val TAG = "PaymentActivity"
+        private const val TAG = "PaymentActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,10 +43,7 @@ class PaymentActivity : AppCompatActivity() {
             finish()
             return
         }
-        Log.d(
-            TAG,
-            "Transaction Params: $paymentParams"
-        )
+        Log.d(TAG, "Transaction Params: $paymentParams")
 
         lifecycleScope.launch {
             val paymentResult = try {
@@ -98,10 +95,10 @@ class PaymentActivity : AppCompatActivity() {
                     "ID: ${paymentResult.nsuHost} | Timestamp: ${paymentResult.transactionTimestamp} \n" +
                             " Comprovante: $receipts"
                 )
+                builder.setOnDismissListener { finish() }
 
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
-                    finish()
                 }
 
                 builder.setNeutralButton("Imprimir") { dialog, _ ->
@@ -109,7 +106,6 @@ class PaymentActivity : AppCompatActivity() {
                         paymentProvider.print(this@PaymentActivity, receipts)
                     }
                     dialog.dismiss()
-                    finish()
                 }
 
                 val dialog = builder.create()

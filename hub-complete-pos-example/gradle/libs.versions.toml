@@ -19,8 +19,8 @@ rxandroid = "3.0.0"
 signalr = "8.0.11"
 preference = "1.2.1"
 
-hub-sitef-provider-debug = "1.0.0-debug"
-hub-sitef-provider-release = "1.0.0-release"
+hub-sitef-provider-debug = "1.0.1-debug"
+hub-sitef-provider-release = "1.0.1-release"
 ##Test only
 
 [libraries]
