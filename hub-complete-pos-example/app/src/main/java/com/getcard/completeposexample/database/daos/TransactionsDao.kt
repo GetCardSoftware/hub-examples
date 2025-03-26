@@ -18,7 +18,7 @@ interface TransactionsDao {
     @Query("SELECT * FROM ${TablesName.TRANSACTIONS} WHERE payment_provider_type = :paymentProviderType ORDER BY id DESC LIMIT 1")
     suspend fun findLast(paymentProviderType: PaymentProviderType): TransactionsModel?
 
-    @Query("SELECT * FROM ${TablesName.TRANSACTIONS}")
+    @Query("SELECT * FROM ${TablesName.TRANSACTIONS} ORDER BY id DESC")
     suspend fun findAll(): List<TransactionsModel?>
 
     @Query("UPDATE ${TablesName.TRANSACTIONS} SET is_refunded = 1 WHERE id = :id")
