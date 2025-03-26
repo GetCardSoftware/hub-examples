@@ -3,7 +3,7 @@
 
     <!--Settings Related-->
     <string name="goto_settings">Ir para Configurações</string>
-    <string name="settings">Configurações</string>
+    <string name="settings">Configurar</string>
     <string name="payment_provider">Provedor de Pagamentos</string>
     <!--####################################-->
 
@@ -36,11 +36,10 @@
     <string name="start_transaction">Iniciar Transação</string>
     <string name="start_refund">Iniciar Estorno</string>
     <string name="installment_type">Tipo de parcelamento</string>
-    <string name="manual_transaction">Transação Manual</string>
-    <string name="manual_refund">Estorno Manual</string>
+    <string name="manual_transaction">Realizar Transação</string>
+    <string name="manual_refund">Estornar Transação</string>
     <!--Refund Related-->
-    <string name="transaction_id">ID da transação</string>
-    <string name="transaction_timestamp">Timestamp da transação</string>
+    <string name="refund">Estornar</string>
     <!--####################################-->
 
 </resources>

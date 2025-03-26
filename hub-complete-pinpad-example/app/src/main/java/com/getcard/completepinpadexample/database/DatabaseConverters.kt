@@ -2,7 +2,10 @@ package com.getcard.completepinpadexample.database
 
 import androidx.room.TypeConverter
 import com.getcard.completepinpadexample.PaymentProviderType
+import com.getcard.hubinterface.OperationStatus
 import com.getcard.hubinterface.config.PinpadType
+import com.getcard.hubinterface.transaction.InstallmentType
+import com.getcard.hubinterface.transaction.PaymentType
 
 class DatabaseConverters {
     @TypeConverter
@@ -25,4 +28,33 @@ class DatabaseConverters {
         return PinpadType.valueOf(pinpadTypeString)
     }
 
+    @TypeConverter
+    fun fromPaymentType(paymentType: PaymentType): String {
+        return paymentType.name
+    }
+
+    @TypeConverter
+    fun toPaymentType(paymentTypeString: String): PaymentType {
+        return PaymentType.valueOf(paymentTypeString)
+    }
+
+    @TypeConverter
+    fun fromInstallmentType(installmentType: InstallmentType): String {
+        return installmentType.name
+    }
+
+    @TypeConverter
+    fun toInstallmentType(installmentTypeString: String): InstallmentType {
+        return InstallmentType.valueOf(installmentTypeString)
+    }
+
+    @TypeConverter
+    fun fromOperationStatus(operationStatus: OperationStatus): String {
+        return operationStatus.name
+    }
+
+    @TypeConverter
+    fun toOperationStatus(operationStatusString: String): OperationStatus {
+        return OperationStatus.valueOf(operationStatusString)
+    }
 }

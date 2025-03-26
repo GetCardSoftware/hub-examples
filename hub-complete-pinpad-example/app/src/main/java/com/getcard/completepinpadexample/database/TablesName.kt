@@ -3,6 +3,8 @@ package com.getcard.completepinpadexample.database
 import com.getcard.completepinpadexample.PaymentProviderType
 
 object TablesName {
+    const val TRANSACTIONS = "transactions"
+    
     object Settings {
         const val MAIN = "settings"
         const val SITEF = "sitef_settings"

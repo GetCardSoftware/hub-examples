@@ -6,6 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.getcard.completepinpadexample.Utils.Companion.getPaymentProviderType
+import com.getcard.completepinpadexample.database.HubDatabase
+import com.getcard.completepinpadexample.database.models.TransactionsModel
 import com.getcard.hubinterface.OperationStatus
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
@@ -70,9 +73,28 @@ class PaymentActivity : AppCompatActivity() {
                         "| TransactionTimestamp: ${paymentResult.transactionTimestamp}"
             )
             if (paymentResult.status == OperationStatus.SUCCESS) {
+                HubDatabase.getInstance(this@PaymentActivity).transactionsDao().insert(
+                    TransactionsModel(
+                        status = paymentResult.status,
+                        amount = paymentResult.transactionAmount.toString(),
+                        paymentType = paymentParams.paymentType,
+                        installmentType = paymentParams.installmentType,
+                        installmentNumber = paymentParams.installmentNumber,
+                        paymentProviderType = getPaymentProviderType(paymentProvider::class),
+                        nsuHost = paymentResult.nsuHost,
+                        timestamp = paymentResult.transactionTimestamp
+                    )
+                )
+
+                val receipts = "Via do Estabelecimento\n" +
+                        "${paymentResult.establishmentReceipt}\n" +
+                        "\n" +
+                        "\n" +
+                        "Via do Cliente\n" +
+                        paymentResult.customerReceipt!!
                 val builder = AlertDialog.Builder(this@PaymentActivity)
                 builder.setTitle("Transação Concluida")
-                builder.setMessage("ID: ${paymentResult.nsuHost} | Timestamp: ${paymentResult.transactionTimestamp} \n Comprovante: ${paymentResult.customerReceipt}")
+                builder.setMessage("ID: ${paymentResult.nsuHost} | Timestamp: ${paymentResult.transactionTimestamp} \n Comprovante: $receipts")
                 builder.setPositiveButton("OK") { dialog, _ ->
                     dialog.dismiss()
                     finish()

@@ -10,6 +10,13 @@ import com.getcard.hub.sitefprovider.pinpad.SitefProvider
 import com.getcard.hubinterface.PaymentProvider
 import com.getcard.hubinterface.config.PaymentProviderConfig
 import kotlinx.coroutines.runBlocking
+import java.text.NumberFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+import kotlin.reflect.KClass
 
 class Utils {
     companion object {
@@ -84,6 +91,29 @@ class Utils {
             return paymentProvider
         }
 
+        fun getPaymentProviderType(clazz: KClass<*>): PaymentProviderType {
+            return when (clazz) {
+                ScopeProvider::class -> PaymentProviderType.SCOPE
+                SitefProvider::class -> PaymentProviderType.SITEF
+                else -> throw IllegalArgumentException("Classe não suportada: $clazz")
+            }
+        }
+
+        fun formatTimestamp(timestamp: Long): String {
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            val dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+            return dateTime.format(formatter)
+        }
+
+        fun applyMoneyMask(amount: String): String {
+//            val paddedText = amount.padStart(3, '0')
+
+            val number = amount.toLongOrNull() ?: 0L
+            val formatter = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
+            formatter.minimumFractionDigits = 2
+            formatter.maximumFractionDigits = 2
+            return formatter.format(number / 100.0).trim()
+        }
     }
 
 }

@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.getcard.completepinpadexample"
         minSdk = 26
-        lint.targetSdk = 35
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 

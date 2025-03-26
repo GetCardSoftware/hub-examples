@@ -1,83 +1,139 @@
 package com.getcard.completepinpadexample
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.getcard.completepinpadexample.database.HubDatabase
+import com.getcard.completepinpadexample.database.models.TransactionsModel
 import com.getcard.completepinpadexample.databinding.ActivityInitRefundBinding
-import com.getcard.completepinpadexample.extensions.formatValue
-import com.getcard.completepinpadexample.extensions.setCurrency
-import com.getcard.completepinpadexample.extensions.string
+import com.getcard.completepinpadexample.databinding.TransactionRowItemBinding
+import com.getcard.hubinterface.OperationStatus
+import com.getcard.hubinterface.transaction.InstallmentType
 import com.getcard.hubinterface.transaction.PaymentType
 import com.getcard.hubinterface.transaction.TransactionParams
+import kotlinx.coroutines.launch
+import java.math.BigDecimal
+
+class ItemAdapter(
+    private val items: List<TransactionsModel>,
+    private val onRefundClick: (TransactionsModel) -> Unit
+) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+
+    class ItemViewHolder(val binding: TransactionRowItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ItemViewHolder {
+        val binding = TransactionRowItemBinding.inflate(
+            LayoutInflater.from(viewGroup.context),
+            viewGroup,
+            false
+        )
+        return ItemViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(viewHolder: ItemViewHolder, position: Int) {
+
+        val item = items[position]
+        viewHolder.binding.amount.text = Utils.applyMoneyMask(item.amount)
+        viewHolder.binding.paymentType.text = when (item.paymentType) {
+            PaymentType.CREDIT -> "Crédito"
+            PaymentType.DEBIT -> "Débito"
+        }
+        viewHolder.binding.installmentType.text = when (item.installmentType) {
+            InstallmentType.INSTALLMENTS -> "Parcelado"
+            InstallmentType.ONE_TIME -> "À Vista"
+        }
+
+        if (item.installmentType == InstallmentType.INSTALLMENTS) {
+            viewHolder.binding.installments.text = "${item.installmentNumber} parcelas"
+        } else {
+            viewHolder.binding.installments.isVisible = false
+        }
+
+        if (item.timestamp != null)
+            viewHolder.binding.dateTime.text = Utils.formatTimestamp(item.timestamp)
+
+        viewHolder.binding.refundButton.isEnabled = false
+        viewHolder.binding.status.text = when (item.status) {
+            OperationStatus.SUCCESS -> {
+                if (item.isRefunded) {
+                    viewHolder.binding.status.setTextColor(Color.RED)
+                    "Estornada"
+                } else {
+                    viewHolder.binding.status.setTextColor(Color.GREEN)
+                    viewHolder.binding.refundButton.isEnabled = true
+                    viewHolder.binding.refundButton.setOnClickListener { onRefundClick(item) }
+                    "Não estornada"
+                }
+            }
+
+            OperationStatus.FAILED -> "Erro"
+            OperationStatus.CANCELLED -> "Cancelada"
+            OperationStatus.DECLINED -> "Rejeitada"
+            OperationStatus.UNKNOWN -> "Status Desconhecido"
+        }
+
+        viewHolder.binding.provider.text = item.paymentProviderType.name
+    }
+
+    override fun getItemCount() = items.size
+}
 
 class InitRefundActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityInitRefundBinding
-    private var choosedPaymentType: PaymentType = PaymentType.DEBIT
-
     companion object {
-        const val TAG = "RefundActivity"
+        private const val TAG = "InitRefundActivity"
     }
+
+    private lateinit var binding: ActivityInitRefundBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         binding = ActivityInitRefundBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            finish()
         }
 
+        lifecycleScope.launch {
+            val transactionsList =
+                HubDatabase.getInstance(this@InitRefundActivity).transactionsDao().findAll()
 
-        val paymentTypes = mapOf(
-            "Crédito" to PaymentType.CREDIT,
-            "Débito" to PaymentType.DEBIT
-        )
-
-        val paymentTypeDropdown = binding.paymentTypeDropdownMenu
-        Utils.setupDropdownMenu(
-            this@InitRefundActivity,
-            paymentTypeDropdown,
-            paymentTypes,
-            value = choosedPaymentType
-        ) { choosedPaymentType = it }
-
-        binding.amountTextField.setCurrency()
-
-
-        binding.startRefundButton.setOnClickListener {
-            val nsuHost = binding.nsuHostText.string()
-            val transactionTimestamp = binding.transactionTimestampText.string()
-            val amount = binding.amountTextField.string().formatValue()
-
-
-            if (nsuHost.isEmpty() || transactionTimestamp.isEmpty() || amount.isEmpty() || amount.toDouble() == 0.0) {
-                Toast.makeText(
-                    this,
-                    "Por favor, preencha todos os campos",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@setOnClickListener
+            val adapter = ItemAdapter(transactionsList.requireNoNulls()) { transaction ->
+                val refundIntent = Intent(this@InitRefundActivity, RefundActivity::class.java)
+                refundIntent.putExtra("TRANSACTION_ID", transaction.id)
+                refundIntent.putExtra(
+                    "REFUND_PARAMS",
+                    TransactionParams(
+                        amount = BigDecimal(transaction.amount),
+                        paymentType = transaction.paymentType,
+                        nsuHost = transaction.nsuHost,
+                        transactionTimestamp = transaction.timestamp,
+                        refund = true
+                    )
+                )
+                launcher.launch(refundIntent)
             }
 
-            val refundIntent = Intent(this, RefundActivity::class.java)
-            refundIntent.putExtra(
-                "REFUND_PARAMS", TransactionParams(
-                    refund = true,
-                    nsuHost = nsuHost,
-                    transactionTimestamp = transactionTimestamp.toLong(),
-                    amount = amount.toBigDecimal(),
-                    paymentType = choosedPaymentType,
+            binding.recyclerView.layoutManager = LinearLayoutManager(this@InitRefundActivity)
+            binding.recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    this@InitRefundActivity,
+                    DividerItemDecoration.VERTICAL
                 )
             )
-            startActivity(refundIntent)
+            binding.recyclerView.adapter = adapter
         }
-
     }
 }
