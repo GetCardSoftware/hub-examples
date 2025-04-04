@@ -24,6 +24,9 @@ interface HubSettingsDao {
     @Update
     suspend fun update(hubSettingsModel: HubSettingsModel)
 
+    @Query("UPDATE ${TablesName.Settings.MAIN} SET token = :token")
+    suspend fun updateToken(token: String)
+
     @Delete
     suspend fun delete(hubSettingsModel: HubSettingsModel)
 

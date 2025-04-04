@@ -12,4 +12,5 @@ import com.getcard.completeposexample.database.TablesName
 data class HubSettingsModel(
     @PrimaryKey @ColumnInfo(name = "id") val id: Int = 1,
     @ColumnInfo(name = "payment_provider_type") val paymentProviderType: PaymentProviderType,
-)
+    @ColumnInfo(name = "token") val token: String,
+    )

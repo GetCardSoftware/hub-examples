@@ -7,13 +7,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import com.getcard.completeposexample.database.HubDatabase
+import com.getcard.completeposexample.database.daos.HubSettingsDao
 import com.getcard.completeposexample.databinding.ActivityInitTransactionBinding
 import com.getcard.completeposexample.extensions.formatValue
 import com.getcard.completeposexample.extensions.setCurrency
 import com.getcard.completeposexample.extensions.string
+import com.getcard.hubinterface.authentication.AuthParams
 import com.getcard.hubinterface.transaction.InstallmentType
 import com.getcard.hubinterface.transaction.PaymentType
 import com.getcard.hubinterface.transaction.TransactionParams
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class InitTransactionActivity : AppCompatActivity() {
 
@@ -24,6 +31,9 @@ class InitTransactionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInitTransactionBinding
     private var chosenInstallmentType: InstallmentType = InstallmentType.ONE_TIME
     private var chosenPaymentType: PaymentType = PaymentType.CREDIT
+    private lateinit var database: HubDatabase
+    private lateinit var hubSettingsDAO: HubSettingsDao
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +44,15 @@ class InitTransactionActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        database = HubDatabase.getInstance(this)
+        hubSettingsDAO = database.settingsDao()
+        var token = ""
+        lifecycleScope.launch {
+            token = withContext(Dispatchers.IO) {
+                hubSettingsDAO.findFirst()?.token.toString()
+            }
+            println("token1 " + token)
         }
 
         val paymentTypes = mapOf(
@@ -101,10 +120,17 @@ class InitTransactionActivity : AppCompatActivity() {
                     chosenPaymentType,
                     chosenInstallmentType,
                     installmentNumber.toInt()
+                ),
+            )
+            transactionIntent.putExtra(
+                "AUTH_PARAMS",
+                AuthParams(
+                    "80345267000150",
+                    token
                 )
             )
+
             startActivity(transactionIntent)
         }
-
     }
 }

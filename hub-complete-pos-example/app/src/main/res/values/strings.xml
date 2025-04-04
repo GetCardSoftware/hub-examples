@@ -40,6 +40,10 @@
     <string name="manual_refund">Estornar Transação</string>
     <!--Refund Related-->
     <string name="refund">Estornar</string>
+    <!--    Login-->
+    <string name="login">Login</string>
+    <string name="password">Senha</string>
+
     <!--####################################-->
 
 </resources>

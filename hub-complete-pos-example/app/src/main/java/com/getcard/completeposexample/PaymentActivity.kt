@@ -10,6 +10,7 @@ import com.getcard.completeposexample.Utils.Companion.getPaymentProviderType
 import com.getcard.completeposexample.database.HubDatabase
 import com.getcard.completeposexample.database.models.TransactionsModel
 import com.getcard.hubinterface.OperationStatus
+import com.getcard.hubinterface.authentication.AuthParams
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
 import kotlinx.coroutines.launch
@@ -37,18 +38,25 @@ class PaymentActivity : AppCompatActivity() {
         }
 
         val paymentParams = intent.getParcelableExtra<TransactionParams>("TRANSACTION_PARAMS")
+        val authParams = intent.getParcelableExtra<AuthParams>("AUTH_PARAMS")
+
+        if (authParams == null) {
+            Log.e(TAG, "Parametros nulos")
+            finish()
+            return
+        }
 
         if (paymentParams == null) {
             Log.e(TAG, "Parametros nulos")
             finish()
             return
         }
-        Log.d(TAG, "Transaction Params: $paymentParams")
 
         lifecycleScope.launch {
             val paymentResult = try {
-                paymentProvider.startTransaction(this@PaymentActivity, paymentParams)
+                paymentProvider.startTransaction(this@PaymentActivity, paymentParams, authParams)
             } catch (e: Exception) {
+                println("Caiu aqui Exception -  " + e.message)
                 Toast.makeText(
                     this@PaymentActivity,
                     "Erro ao realizar transação: ${e.message}",

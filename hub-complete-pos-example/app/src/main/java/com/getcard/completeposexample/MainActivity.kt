@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,6 +40,11 @@ class MainActivity : AppCompatActivity() {
         binding.settingsButton.setOnClickListener {
             val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
+        }
+
+        binding.transactionLogin.setOnClickListener {
+            val loginIntent = Intent(this, LoginActivity::class.java)
+            startActivity(loginIntent)
         }
 
 

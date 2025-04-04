@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.getcard.completeposexample.database.HubDatabase
 import com.getcard.hubinterface.OperationStatus
+import com.getcard.hubinterface.authentication.AuthParams
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
 import kotlinx.coroutines.launch
@@ -41,6 +42,12 @@ class RefundActivity : AppCompatActivity() {
         }
 
         val refundParams = intent.getParcelableExtra<TransactionParams>("REFUND_PARAMS")
+        val authParams = intent.getParcelableExtra<AuthParams>("AUTH_PARAMS")
+        if (authParams == null) {
+            Log.e(TAG, "Parametros nulos")
+            finish()
+            return
+        }
         if (refundParams == null) {
             Log.e(TAG, "Parametros nulos")
             finish()
@@ -52,7 +59,8 @@ class RefundActivity : AppCompatActivity() {
             val refundResult = try {
                 paymentProvider.startTransaction(
                     this@RefundActivity,
-                    refundParams
+                    refundParams,
+                    authParams
                 )
             } catch (e: Exception) {
                 Toast.makeText(

@@ -17,6 +17,7 @@ import com.getcard.completeposexample.database.models.TransactionsModel
 import com.getcard.completeposexample.databinding.ActivityInitRefundBinding
 import com.getcard.completeposexample.databinding.TransactionRowItemBinding
 import com.getcard.hubinterface.OperationStatus
+import com.getcard.hubinterface.authentication.AuthParams
 import com.getcard.hubinterface.transaction.InstallmentType
 import com.getcard.hubinterface.transaction.PaymentType
 import com.getcard.hubinterface.transaction.TransactionParams
@@ -106,7 +107,13 @@ class InitRefundActivity : AppCompatActivity() {
             finish()
         }
 
+        val database = HubDatabase.getInstance(this)
+        val hubSettingsDAO = database.settingsDao()
+
+
         lifecycleScope.launch {
+            var token = hubSettingsDAO.findFirst()?.token.toString()
+
             val transactionsList =
                 HubDatabase.getInstance(this@InitRefundActivity).transactionsDao().findAll()
 
@@ -120,7 +127,14 @@ class InitRefundActivity : AppCompatActivity() {
                         paymentType = transaction.paymentType,
                         nsuHost = transaction.nsuHost,
                         transactionTimestamp = transaction.timestamp,
-                        refund = true
+                        refund = true,
+                    )
+                )
+                refundIntent.putExtra(
+                    "AUTH_PARAMS",
+                    AuthParams(
+                        "80345267000150",
+                        token
                     )
                 )
                 launcher.launch(refundIntent)

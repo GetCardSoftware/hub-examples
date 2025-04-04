@@ -30,6 +30,11 @@ class SitefSettingsActivity : AppCompatActivity() {
         sitefSettingsDao = database.sitefSettingsDao()
         hubSettingsDao = database.settingsDao()
 
+        binding.ipTextField.setText("192.168.1.227")
+        binding.tokenTextField.setText("123")
+        binding.companyCodeTextField.setText("00000000")
+        binding.terminalTextField.setText("50201136")
+
         binding.saveButton.setOnClickListener {
             submitSettings()
         }
@@ -47,11 +52,11 @@ class SitefSettingsActivity : AppCompatActivity() {
 
 
     private fun submitSettings() {
-
         val ip = binding.ipTextField.text.toString()
         val token = binding.tokenTextField.text.toString()
         val company = binding.companyCodeTextField.text.toString()
         val terminal = binding.terminalTextField.text.toString()
+
         if (
             ip.isEmpty() ||
             token.isEmpty() ||
@@ -66,7 +71,6 @@ class SitefSettingsActivity : AppCompatActivity() {
             return
         }
 
-
         val sitefSettings = SitefSettingsModel(
             id = 1,
             serverIp = ip,
@@ -78,7 +82,7 @@ class SitefSettingsActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             sitefSettingsDao.insert(sitefSettings)
-            hubSettingsDao.insert(HubSettingsModel(paymentProviderType = PaymentProviderType.SITEF))
+            hubSettingsDao.insert(HubSettingsModel(paymentProviderType = PaymentProviderType.SITEF, token = ""))
             Toast.makeText(
                 this@SitefSettingsActivity,
                 "Configurações salvas com sucesso!",
@@ -86,7 +90,5 @@ class SitefSettingsActivity : AppCompatActivity() {
             ).show()
             finish()
         }
-
-
     }
 }
