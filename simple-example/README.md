@@ -1,18 +1,7 @@
-# **Hub Core Simple PIN Pad Example**
+# **Hub Simple Example**
 
 Este é um exemplo de como integrar as bibliotecas do **Hub de Pagamentos** de maneira simples à um aplicativo.  
 Ele é composto por apenas duas _activities_, e exemplifica como realizar um pagamento e um estorno de pagamento.
-
-## Dependências
-
-O projeto depende das bibliotecas **[Hub Interface](https://github.com/GetCardSoftware/hub-interface)** e **[Hub Core](https://github.com/GetCardSoftware/hub-core-pinpad)**.
-
-```kotlin
-dependencies {
-    implementation("com.getcard.hub:hub-interface:1.0.0")
-    implementation("com.getcard.hub:core-pinpad:1.0.0-debug")
-}
-```
 
 # MainActivity
 

@@ -1,32 +1,25 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp")
+    id("androidx.room")
 }
 
 android {
 
-    namespace = "com.getcard.simpleexample"
+    namespace = "com.getcard.completepinpadexample"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.getcard.simpleexample"
+        applicationId = "com.getcard.completepinpadexample"
         minSdk = 26
-        lint.targetSdk = 35
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-
-    signingConfigs {
-        create("gertecDevelopment") {
-            storeFile = file("../key/GPOS700/swex-gpos700-devel.jks")
-            storePassword = "swpos123456"
-            keyPassword = "SWex123"
-            keyAlias = "enhanced"
-        }
-    }
 
     buildTypes {
         release {
@@ -35,10 +28,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("gertecDevelopment")
-        }
-        debug {
-            signingConfig = signingConfigs.getByName("gertecDevelopment")
         }
     }
 
@@ -53,10 +42,33 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
 }
 
 
 dependencies {
+
+
+    ////Implementação do Room para manipular banco de dados SQLite//////////////////
+
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+
+    // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
+    // See Add the KSP plugin to your project
+    ksp("androidx.room:room-compiler:$room_version")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:$room_version")
+//////////////////////////////////////////////////////////////////////
 
     implementation(libs.androidx.preference)
 
@@ -78,5 +90,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     //Payment hub
+    implementation(libs.hub.scope.provider)
     implementation(libs.hub.sitef.provider)
- }
+}

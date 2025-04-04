@@ -1,0 +1,8 @@
+package com.getcard.pdvwebsocket
+
+class Configs {
+    companion object {
+        const val API_BASE_URL = "172.16.100.141:8080"
+        const val AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInRva2VuX3BheWxvYWQiOiJ7XCJjbnBqXCI6XCI4MDM0NTI2NzAwMDE4MFwiLFwidGVybWluYWxJZFwiOlwiOWMxNWJmMDgtMWMxNi00ZDJkLTg3OGMtOTFlMmIyZDM4NWQ4XCIsXCJwZHZJZFwiOlwiMzQ4MWM4ZDQtZTBiZC00NGUzLTlkYWUtMGFhYTc1ZGExZjY4XCIsXCJyb2xlXCI6XCJDT01QQU5ZXCJ9In0.PM0NATZoQYm__lTj36uxGflmUV-usy1VwKaUQegZ01Q"
+    }
+}

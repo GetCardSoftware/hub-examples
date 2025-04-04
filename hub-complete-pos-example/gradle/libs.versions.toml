@@ -19,8 +19,8 @@ rxandroid = "3.0.0"
 signalr = "8.0.11"
 preference = "1.2.1"
 
-#hubscopeprovider = "1.1.1-debug"
-hubsitefprovider = "1.2.2-debug"
+hub-sitef-provider-debug = "2.0.0-debug"
+hub-sitef-provider-release = "2.0.0-release"
 ##Test only
 
 [libraries]
@@ -42,7 +42,18 @@ signalr = { module = "com.microsoft.signalr:signalr", version.ref = "signalr" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 
 # Hub
-hub-sitef-provider = { module = "com.getcard.hub.pos:sitef-provider-gpos760", version.ref = "hubsitefprovider" }
+#noinspection SimilarGradleDependency
+hub-sitef-provider-gpos720-debug = { module = "com.getcard.hub.pos:sitef-provider-gpos720", version.ref = "hub-sitef-provider-debug" }
+#noinspection SimilarGradleDependency
+hub-sitef-provider-gpos720-release = { module = "com.getcard.hub.pos:sitef-provider-gpos720", version.ref = "hub-sitef-provider-release" }
+#noinspection SimilarGradleDependency
+hub-sitef-provider-gpos760-debug = { module = "com.getcard.hub.pos:sitef-provider-gpos760", version.ref = "hub-sitef-provider-debug" }
+#noinspection SimilarGradleDependency
+hub-sitef-provider-gpos760-release = { module = "com.getcard.hub.pos:sitef-provider-gpos760", version.ref = "hub-sitef-provider-release" }
+#noinspection SimilarGradleDependency
+hub-sitef-provider-gpos780-debug = { module = "com.getcard.hub.pos:sitef-provider-gpos780", version.ref = "hub-sitef-provider-debug" }
+#noinspection SimilarGradleDependency
+hub-sitef-provider-gpos780-release = { module = "com.getcard.hub.pos:sitef-provider-gpos780", version.ref = "hub-sitef-provider-release" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

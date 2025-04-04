@@ -19,8 +19,8 @@ rxandroid = "3.0.0"
 signalr = "8.0.11"
 preference = "1.2.1"
 
-#hubscopeprovider = "1.1.1-debug"
-hubsitefprovider = "1.2.2-debug"
+hub-scope-provider = "1.0.0-debug"
+hub-sitef-provider = "1.0.0-debug"
 ##Test only
 
 [libraries]
@@ -42,7 +42,8 @@ signalr = { module = "com.microsoft.signalr:signalr", version.ref = "signalr" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 
 # Hub
-hub-sitef-provider = { module = "com.getcard.hub.pos:sitef-provider-gpos760", version.ref = "hubsitefprovider" }
+hub-scope-provider = { module = "com.getcard.hub.pinpad:scope-provider", version.ref = "hub-scope-provider" }
+hub-sitef-provider = { module = "com.getcard.hub.pinpad:sitef-provider", version.ref = "hub-sitef-provider" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

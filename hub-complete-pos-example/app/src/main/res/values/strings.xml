@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Hub Complete POS Example</string>
+
+    <!--Settings Related-->
+    <string name="goto_settings">Ir para Configurações</string>
+    <string name="settings">Configurar</string>
+    <string name="payment_provider">Provedor de Pagamentos</string>
+    <!--####################################-->
+
+    <!--Scope Settings Related-->
+    <string name="scope_settings_title">Configurações SCOPE</string>
+    <string name="scope_ip">IP do servidor Scope</string>
+    <string name="scope_port">Porta do servidor Scope</string>
+    <string name="scope_company_code">Código da empresa</string>
+    <string name="scope_company_branch">Filial da empresa</string>
+    <string name="scope_terminal_code">Código do terminal</string>
+    <string name="scope_pinpad">Pinpad</string>
+    <!--####################################-->
+
+    <!--Sitef Settings Related-->
+    <string name="sitef_settings_title">Configurações SITEF</string>
+    <string name="sitef_ip">IP do servidor sitef</string>
+    <string name="sitef_token">Token de registro</string>
+    <string name="sitef_company_code">Código da Empresa</string>
+    <string name="sitef_terminal_code">Código do terminal</string>
+    <string name="sitef_pinpad">Pinpad</string>
+    <!--####################################-->
+
+    <string name="next">Próximo</string>
+    <string name="save">Salvar</string>
+
+    <!--Transaction Related-->
+    <string name="transaction_value">Valor da transação</string>
+    <string name="payment_type">Modalidade de pagamento</string>
+    <string name="installment_number">Número de parcelas</string>
+    <string name="start_transaction">Iniciar Transação</string>
+    <string name="start_refund">Iniciar Estorno</string>
+    <string name="installment_type">Tipo de parcelamento</string>
+    <string name="manual_transaction">Realizar Transação</string>
+    <string name="manual_refund">Estornar Transação</string>
+    <!--Refund Related-->
+    <string name="refund">Estornar</string>
+    <!--    Login-->
+    <string name="login">Login</string>
+    <string name="password">Senha</string>
+
+    <!--####################################-->
+
+</resources>
