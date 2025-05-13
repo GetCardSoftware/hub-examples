@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.getcard.hub.sitefprovider.pos.SitefProvider
 import com.getcard.hubinterface.OperationStatus
 import com.getcard.hubinterface.PaymentProvider
+import com.getcard.hubinterface.authentication.AuthParams
 import com.getcard.hubinterface.config.PaymentProviderConfig
 import com.getcard.hubinterface.transaction.TransactionParams
 import com.getcard.hubinterface.transaction.TransactionResponse
@@ -24,30 +25,36 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        // TODO: Inserir os dados do servidor
         val providerConfig = PaymentProviderConfig.builder()
-            .setIp("192.168.1.227")
-            .setToken("2823-0548-7763-1206")
-            .setCompany("00000000")
-            .setTerminal("50201136")
+            .setIp("IP")
+            .setToken("TOKEN")
+            .setCompany("EMPRESA")
+            .setTerminal("TERMINAL")
             .build()
-
-
 
         val paymentProvider = SitefProvider(providerConfig)
 
         val transactionParams = intent.getParcelableExtra<TransactionParams>("TRANSACTION_PARAMS")
+        val authParams = intent.getParcelableExtra<AuthParams>("AUTH_PARAMS")
 
-        if(transactionParams == null) {
+        if (transactionParams == null) {
             Toast.makeText(this, "Nenhum parâmetro transação encontrado", Toast.LENGTH_LONG).show()
             finish()
             return
         }
         Log.d("PaymentActivity", "PaymentParams: $transactionParams")
 
+        if (authParams == null) {
+            Toast.makeText(this, "Nenhum parâmetro de autenticação encontrado", Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+        Log.d("PaymentActivity", "PaymentParams: $authParams")
+
         lifecycleScope.launch {
             val paymentResult = try {
-                paymentProvider.startTransaction(this@PaymentActivity, transactionParams)
+                paymentProvider.startTransaction(this@PaymentActivity, transactionParams, authParams)
             } catch (e: Exception) {
                 Toast.makeText(
                     this@PaymentActivity,
