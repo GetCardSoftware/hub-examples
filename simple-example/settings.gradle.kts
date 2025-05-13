@@ -18,18 +18,10 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven {
-            url = uri("https://dev-hubpay.tefbr.com.br/repo/repository/libs-getcard/")
-            credentials {
-                username = "admin"
-                password = providers.gradleProperty("GETCARD_HOMOLOG_PASSWORD").orNull
-            }
-        }
-        maven {
-            isAllowInsecureProtocol = true
-            url = uri("https://dev-hubpay-getcard.cloudsg.com.br/repo/repository/getcard-public/")
+            url = uri("https://dev-hubpay.tefbr.com.br/repo/repository/getcard-public/")
             credentials {
                 username = "getcard-public"
-                password = "!V4V4xEDUl0GC\$HK*nVMtvi*Q93mjzQKZn*6U%g\$"
+                password = "aq:z.wQy^w#.Zg[)1k>|D#QNK}JgL5GL"
             }
         }
     }
